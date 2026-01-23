@@ -1,4 +1,4 @@
-require "nvchad.options"
+require("nvchad.options")
 
 local o = vim.o
 
@@ -40,5 +40,28 @@ o.updatetime = 250
 o.timeoutlen = 300
 
 -- Mouse
-o.mouse = "a"           -- Enable mouse in all modes
+o.mouse = "a" -- Enable mouse in all modes
 o.mousemoveevent = true -- Enable mouse move events (for hover etc.)
+
+-- Transparent background (for Ghostty)
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "NonText", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#808080", bg = "NONE" })
+	end,
+})
+
+-- Terminal settings: wrap lines to prevent horizontal scrolling
+vim.api.nvim_create_autocmd("TermOpen", {
+	pattern = "*",
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.sidescrolloff = 0
+	end,
+})

@@ -5,13 +5,14 @@
 `<leader>` = スペースキー
 
 ### 基本操作
+
 ：
-| キー    | モード | 機能                          |
+| キー | モード | 機能 |
 | ------- | ------ | ----------------------------- |
-| `jk`    | Insert | ノーマルモードに戻る          |
-| `;`     | Normal | コマンドモード（`:`の代わり） |
-| `<C-s>` | Normal | ファイル保存                  |
-| `<Esc>` | Normal | 検索ハイライトを消す          |
+| `jk` | Insert | ノーマルモードに戻る |
+| `;` | Normal | コマンドモード（`:`の代わり） |
+| `<C-s>` | Normal | ファイル保存 |
+| `<Esc>` | Normal | 検索ハイライトを消す |
 
 ### ナビゲーション
 
@@ -89,29 +90,29 @@
 
 ### Git (gitsigns + lazygit)
 
-| キー         | モード | 機能                    |
-| ------------ | ------ | ----------------------- |
-| `<leader>gg` | Normal | Lazygitを開く           |
-| `]c`         | Normal | 次のhunkへ              |
-| `[c`         | Normal | 前のhunkへ              |
-| `<leader>gp` | Normal | hunkをプレビュー        |
-| `<leader>gs` | Normal | hunkをステージ          |
-| `<leader>gr` | Normal | hunkをリセット          |
-| `<leader>gS` | Normal | バッファ全体をステージ  |
-| `<leader>gR` | Normal | バッファ全体をリセット  |
-| `<leader>gb` | Normal | 行のblame表示           |
-| `<leader>gd` | Normal | diffを表示              |
+| キー         | モード | 機能                   |
+| ------------ | ------ | ---------------------- |
+| `<leader>gg` | Normal | Lazygitを開く          |
+| `]c`         | Normal | 次のhunkへ             |
+| `[c`         | Normal | 前のhunkへ             |
+| `<leader>gp` | Normal | hunkをプレビュー       |
+| `<leader>gs` | Normal | hunkをステージ         |
+| `<leader>gr` | Normal | hunkをリセット         |
+| `<leader>gS` | Normal | バッファ全体をステージ |
+| `<leader>gR` | Normal | バッファ全体をリセット |
+| `<leader>gb` | Normal | 行のblame表示          |
+| `<leader>gd` | Normal | diffを表示             |
 
 ### ターミナル
 
-| キー            | モード   | 機能                         |
-| --------------- | -------- | ---------------------------- |
-| `<leader>h`     | Normal   | 水平ターミナルをトグル       |
-| `<leader>v`     | Normal   | 垂直ターミナルをトグル       |
-| `<Esc><Esc>`    | Terminal | ターミナルモードを抜ける     |
-| `<C-h/j/k/l>`   | Terminal | ウィンドウ間を移動           |
-| `<C-\><C-h>`    | Terminal | 水平ターミナルをトグル       |
-| `<C-\><C-v>`    | Terminal | 垂直ターミナルをトグル       |
+| キー          | モード   | 機能                     |
+| ------------- | -------- | ------------------------ |
+| `<leader>h`   | Normal   | 水平ターミナルをトグル   |
+| `<leader>v`   | Normal   | 垂直ターミナルをトグル   |
+| `<Esc><Esc>`  | Terminal | ターミナルモードを抜ける |
+| `<C-h/j/k/l>` | Terminal | ウィンドウ間を移動       |
+| `<C-\><C-h>`  | Terminal | 水平ターミナルをトグル   |
+| `<C-\><C-v>`  | Terminal | 垂直ターミナルをトグル   |
 
 ### 編集
 
@@ -126,7 +127,7 @@
 | `<leader>rr` | Normal        | カーソル下の単語を一括置換         |
 | `<leader>cx` | Normal        | ファイルを実行可能にする           |
 
-### テーマ
+### テーマだよ
 
 | キー         | モード | 機能       |
 | ------------ | ------ | ---------- |
