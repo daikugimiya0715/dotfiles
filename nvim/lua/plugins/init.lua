@@ -152,10 +152,26 @@ return {
 	-- Claude Code (WebSocket MCP protocol implementation)
 	{
 		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
 		lazy = false,
 		config = function()
-			require("claudecode").setup({})
+			require("claudecode").setup({
+				diff_opts = {
+					auto_close_on_accept = true,
+					vertical_split = true,
+				},
+			})
 		end,
+		keys = {
+			{ "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection" },
+			{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+			{ "<leader>at", "<cmd>ClaudeCodeTreeAdd<cr>", desc = "Add file from tree", ft = { "NvimTree", "neo-tree", "oil" } },
+		},
 	},
 
 	-- Lazygit integration
@@ -202,6 +218,25 @@ return {
 			checkbox = {
 				unchecked = { icon = "󰄱 " },
 				checked = { icon = "󰄵 " },
+			},
+		},
+	},
+
+	-- Which-key group names
+	{
+		"folke/which-key.nvim",
+		opts = {
+			spec = {
+				{ "<leader>b", group = "Buffer", icon = { icon = "󰈔", color = "azure" } },
+				{ "<leader>g", group = "Git", icon = { icon = "", color = "orange" } },
+				{ "<leader>s", group = "Split/Window", icon = { icon = "", color = "blue" } },
+				{ "<leader>x", group = "Trouble", icon = { icon = "", color = "red" } },
+				{ "<leader>c", group = "Code", icon = { icon = "", color = "green" } },
+				{ "<leader>r", group = "Refactor", icon = { icon = "", color = "purple" } },
+				{ "<leader>l", group = "LSP", icon = { icon = "", color = "cyan" } },
+				{ "<leader>f", group = "Find/File", icon = { icon = "", color = "azure" } },
+				{ "<leader>m", group = "Markdown", icon = { icon = "", color = "grey" } },
+				{ "<leader>w", group = "WhichKey", icon = { icon = "󰌌", color = "yellow" } },
 			},
 		},
 	},

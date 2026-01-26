@@ -1,4 +1,4 @@
-require "nvchad.mappings"
+require("nvchad.mappings")
 
 local map = vim.keymap.set
 
@@ -23,6 +23,58 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 -- Buffer navigation
 map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+
+-- Buffer management
+-- Helper: Get list of normal file buffers (excludes nvim-tree, terminals, etc.)
+local function get_file_bufs()
+	local bufs = {}
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted then
+			table.insert(bufs, buf)
+		end
+	end
+	return bufs
+end
+
+-- Close buffer smartly: if last buffer, close window instead of creating No Name
+local function close_buffer_smart(force)
+	local file_bufs = get_file_bufs()
+	local current = vim.api.nvim_get_current_buf()
+
+	if #file_bufs <= 1 then
+		-- Last buffer: close the window (nvim-tree stays)
+		local wins = vim.api.nvim_list_wins()
+		if #wins > 1 then
+			vim.cmd("close")
+		else
+			-- Only one window, quit nvim
+			vim.cmd("q")
+		end
+	else
+		-- Multiple buffers: switch to another then delete
+		if force then
+			vim.cmd("bp | bw! #")
+		else
+			vim.cmd("bp | bd #")
+		end
+	end
+end
+
+map("n", "<leader>bd", function()
+	close_buffer_smart(false)
+end, { desc = "Close buffer" })
+map("n", "<leader>bw", function()
+	close_buffer_smart(true)
+end, { desc = "Close buffer (force)" })
+map("n", "<leader>bo", function()
+	local current = vim.api.nvim_get_current_buf()
+	for _, buf in ipairs(get_file_bufs()) do
+		if buf ~= current then
+			vim.api.nvim_buf_delete(buf, { force = true })
+		end
+	end
+end, { desc = "Close other buffers" })
+map("n", "<leader>bb", "<cmd>Telescope buffers<CR>", { desc = "List buffers" })
 
 -- Visual mode: Move lines
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
@@ -80,20 +132,20 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- Terminal toggle (override NvChad's default to use toggle instead of new)
 -- Normal mode: <leader>h / <leader>v
 map("n", "<leader>h", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggle" }
+	require("nvchad.term").toggle({ pos = "sp", id = "htoggle" })
 end, { desc = "Toggle horizontal terminal" })
 
 map("n", "<leader>v", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggle" }
+	require("nvchad.term").toggle({ pos = "vsp", id = "vtoggle" })
 end, { desc = "Toggle vertical terminal" })
 
 -- Terminal mode: use Ctrl key since <leader> doesn't work in terminal mode
 map("t", "<C-\\><C-h>", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggle" }
+	require("nvchad.term").toggle({ pos = "sp", id = "htoggle" })
 end, { desc = "Toggle horizontal terminal" })
 
 map("t", "<C-\\><C-v>", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggle" }
+	require("nvchad.term").toggle({ pos = "vsp", id = "vtoggle" })
 end, { desc = "Toggle vertical terminal" })
 
 -- LSP
