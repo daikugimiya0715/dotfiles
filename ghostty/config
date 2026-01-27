@@ -27,6 +27,12 @@ cursor-color = FF88FF
 cursor-style-blink = true
 
 
+# マウススクロール
+# precision: トラックパッド用（デフォルト0.1は遅すぎる場合あり）
+# discrete: マウスホイール用（デフォルト1）
+mouse-scroll-multiplier = precision:1,discrete:3
+
+
 # Mac特有
 macos-titlebar-style = native
 macos-titlebar-proxy-icon= hidden
