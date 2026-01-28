@@ -78,6 +78,8 @@ brew bundle --file=~/projects/personal/dotfiles/Brewfile
 | `<leader>fh` | ヘルプ検索               |
 | `<C-\>`      | フローティングターミナル |
 
+トラブルシューティングについては [nvim/TROUBLESHOOTING.md](nvim/TROUBLESHOOTING.md) を参照。
+
 ## miseで管理しているランタイム
 
 - Node.js 22
