@@ -10,6 +10,7 @@ CONFIG_DIR="$HOME/.config"
 BACKUP_DIR="$HOME/.config_backup/$(date +%Y%m%d_%H%M%S)"
 
 # 色付き出力
+# tesst
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'

@@ -78,11 +78,26 @@ map("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Diagnostics to locli
 -- Terminal
 -- ═══════════════════════════════════════════════════════════════════════════
 
+-- Helper: floatingウィンドウではキーをそのまま渡し、それ以外ではウィンドウ移動
+local function term_nav(key, dir)
+  return function()
+    local win = vim.api.nvim_get_current_win()
+    local is_floating = vim.api.nvim_win_get_config(win).relative ~= ""
+    if is_floating then
+      -- floatingターミナルではキーをそのままターミナルに送る
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), "n", false)
+    else
+      -- 通常のターミナルではウィンドウ移動
+      vim.cmd("wincmd " .. dir)
+    end
+  end
+end
+
 map("t", "<C-x>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Go to left window" })
-map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Go to lower window" })
-map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Go to upper window" })
-map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Go to right window" })
+map("t", "<C-h>", term_nav("<C-h>", "h"), { desc = "Go to left window (non-floating)" })
+map("t", "<C-j>", term_nav("<C-j>", "j"), { desc = "Go to lower window (non-floating)" })
+map("t", "<C-k>", term_nav("<C-k>", "k"), { desc = "Go to upper window (non-floating)" })
+map("t", "<C-l>", term_nav("<C-l>", "l"), { desc = "Go to right window (non-floating)" })
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Quick Actions
