@@ -43,7 +43,7 @@ o.undolevels = 10000
 
 -- Performance
 o.updatetime = 200 -- Faster completion
-o.timeoutlen = 300 -- Faster key sequence completion
+o.timeoutlen = 500 -- Key sequence timeout (300ms is too short for leader key)
 
 -- UI
 o.termguicolors = true
@@ -54,6 +54,7 @@ o.cursorlineopt = "both" -- Enable cursorline for modes.nvim
 -- Files
 o.swapfile = false -- No swap files
 o.backup = false -- No backup files
+o.autoread = true -- Auto-reload files changed outside Neovim
 
 -- Splits
 o.splitright = true -- Vertical splits to the right
@@ -86,10 +87,20 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
+-- Auto-reload buffers when files change on disk (for Claude Code, git, etc.)
+vim.api.nvim_create_autocmd({ "FocusGained", "TermLeave", "BufEnter", "WinEnter", "CursorHold", "CursorHoldI" }, {
+  callback = function()
+    if vim.fn.getcmdwintype() == "" then
+      vim.cmd("checktime")
+    end
+  end,
+  desc = "Auto-reload buffers on external file changes",
+})
+
 -- Ensure line numbers are always enabled (autocmd for safety)
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
   callback = function()
-    local exclude_ft = { "NvimTree", "lazy", "mason", "help", "TelescopePrompt", "oil" }
+    local exclude_ft = { "NvimTree", "lazy", "mason", "help", "TelescopePrompt", "oil", "nvdash" }
     if not vim.tbl_contains(exclude_ft, vim.bo.filetype) then
       vim.wo.number = true
       vim.wo.relativenumber = true

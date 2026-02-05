@@ -74,6 +74,7 @@ return {
         "pyright",
         "ruff",
         "biome",
+        "eslint-lsp",
       },
     },
   },
@@ -84,6 +85,8 @@ return {
   -- nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    main = "nvim-treesitter.configs",
     opts = {
       ensure_installed = {
         "vim",

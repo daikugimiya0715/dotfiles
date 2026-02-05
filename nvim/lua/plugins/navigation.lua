@@ -1,4 +1,4 @@
--- Navigation & Search plugins: snacks, telescope, oil, flash, hbac
+-- Navigation & Search plugins: snacks, flash, hbac, nvim-tree
 return {
   -- Snacks.nvim: Modern utilities (picker, lazygit, bufdelete, terminal)
   {
@@ -48,18 +48,23 @@ return {
       { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "LazyGit File Log" },
       { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
       { "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" },
-      { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
-      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
-      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Grep Word", mode = { "n", "x" } },
-      { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      { "<leader>sr", function() Snacks.picker.recent() end, desc = "Recent Files" },
-      { "<leader>sc", function() Snacks.picker.commands() end, desc = "Commands" },
-      { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
-      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-      { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-      { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume Last Picker" },
+      -- Find (Snacks picker)
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Grep Word", mode = { "n", "x" } },
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
+      { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
+      { "<leader>fh", function() Snacks.picker.help() end, desc = "Help Pages" },
+      { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>fd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+      { "<leader>fs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>fR", function() Snacks.picker.resume() end, desc = "Resume Last Picker" },
+      { "<C-p>", function() Snacks.picker.files() end, desc = "Find Files" },
+      -- Terminal
       { "<leader>tt", function() Snacks.terminal() end, desc = "Toggle Terminal" },
+      { "<leader>th", function() Snacks.terminal(nil, { win = { position = "bottom", height = 0.3 } }) end, desc = "Terminal (horizontal)" },
+      { "<leader>tv", function() Snacks.terminal(nil, { win = { position = "right", width = 0.4 } }) end, desc = "Terminal (vertical)" },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
@@ -85,91 +90,6 @@ return {
     opts = { autoclose = true, threshold = 10, close_buffers_with_windows = false },
   },
 
-  -- Telescope
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-ui-select.nvim",
-    },
-    cmd = "Telescope",
-    keys = {
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help Tags" },
-      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
-      { "<leader>fc", "<cmd>Telescope git_commits<cr>", desc = "Git Commits" },
-      { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git Status" },
-      { "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-      { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-    },
-    config = function()
-      local telescope = require "telescope"
-      local actions = require "telescope.actions"
-      telescope.setup {
-        defaults = {
-          prompt_prefix = "   ",
-          selection_caret = " ",
-          sorting_strategy = "ascending",
-          layout_config = { horizontal = { prompt_position = "top", preview_width = 0.55 } },
-          mappings = {
-            i = {
-              ["<C-j>"] = actions.move_selection_next,
-              ["<C-k>"] = actions.move_selection_previous,
-              ["<Esc>"] = actions.close,
-            },
-          },
-          file_ignore_patterns = { "node_modules", ".git/", "target/", "dist/", "build/" },
-        },
-        pickers = {
-          find_files = { hidden = true },
-          live_grep = {
-            additional_args = function()
-              return { "--hidden" }
-            end,
-          },
-        },
-        extensions = {
-          fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true },
-          ["ui-select"] = { require("telescope.themes").get_dropdown() },
-        },
-      }
-      telescope.load_extension "fzf"
-      telescope.load_extension "ui-select"
-    end,
-  },
-
-  -- oil.nvim: File manager
-  {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    lazy = false,
-    keys = {
-      { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
-      { "<leader>e", "<cmd>Oil<cr>", desc = "File Explorer (Oil)" },
-    },
-    config = function()
-      require("oil").setup {
-        default_file_explorer = true,
-        columns = { "icon", "permissions", "size", "mtime" },
-        delete_to_trash = true,
-        skip_confirm_for_simple_edits = true,
-        view_options = { show_hidden = true, natural_order = true },
-        float = { padding = 2, max_width = 120, max_height = 40, border = "rounded" },
-        keymaps = {
-          ["g?"] = "actions.show_help",
-          ["<CR>"] = "actions.select",
-          ["<C-v>"] = "actions.select_vsplit",
-          ["<C-s>"] = "actions.select_split",
-          ["-"] = "actions.parent",
-          ["g."] = "actions.toggle_hidden",
-        },
-      }
-    end,
-  },
-
   -- flash.nvim: Fast navigation
   {
     "folke/flash.nvim",
@@ -185,6 +105,47 @@ return {
       label = { rainbow = { enabled = true, shade = 5 } },
       modes = { char = { jump_labels = true } },
     },
+  },
+
+  -- nvim-tree: File explorer with buffer highlight
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile" },
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "File Explorer" },
+      { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Find File in Tree" },
+    },
+    config = function()
+      require("nvim-tree").setup {
+        update_focused_file = {
+          enable = true,
+          update_root = false,
+        },
+        view = {
+          width = 30,
+          side = "left",
+          cursorline = true,
+        },
+      }
+
+      -- Auto-sync tree cursor to current buffer on BufEnter
+      local api = require "nvim-tree.api"
+      vim.api.nvim_create_autocmd("BufEnter", {
+        nested = true,
+        callback = function()
+          local bufname = vim.fn.bufname()
+          -- Skip if entering the tree itself or non-file buffers
+          if bufname:match "NvimTree_" or vim.bo.buftype ~= "" then
+            return
+          end
+          -- Only find_file if the tree is already visible
+          if api.tree.is_visible() then
+            api.tree.find_file { buf = vim.fn.bufnr(), open = false, focus = false }
+          end
+        end,
+      })
+    end,
   },
 
   -- overlook.nvim: Code peek in floating popups

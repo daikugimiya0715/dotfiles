@@ -4,6 +4,7 @@
 vim.lsp.enable({
   "lua_ls",
   "ts_ls",
+  "eslint",
   "gopls",
   "pyright",
   "rust_analyzer",

@@ -51,9 +51,9 @@ return {
           gs.blame_line { full = true }
         end, { desc = "Blame Line" })
         map("n", "<leader>gB", gs.toggle_current_line_blame, { desc = "Toggle Blame" })
-        map("n", "<leader>hr", gs.reset_hunk, { desc = "Reset Hunk" })
-        map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage Hunk" })
-        map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
+        map("n", "<leader>gr", gs.reset_hunk, { desc = "Reset Hunk" })
+        map("n", "<leader>gs", gs.stage_hunk, { desc = "Stage Hunk" })
+        map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
       end,
     },
   },
@@ -71,7 +71,7 @@ return {
       { "<leader>gq", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
       { "<leader>gm", "<cmd>DiffviewOpen main...HEAD<cr>", desc = "Diff vs main branch" },
       { "<leader>gM", "<cmd>DiffviewOpen master...HEAD<cr>", desc = "Diff vs master branch" },
-      { "<leader>gs", "<cmd>DiffviewOpen --staged<cr>", desc = "Staged changes" },
+      { "<leader>gS", "<cmd>DiffviewOpen --staged<cr>", desc = "Staged changes" },
       { "<leader>gt", "<cmd>DiffviewToggleFiles<cr>", desc = "Toggle file panel" },
     },
     config = function()

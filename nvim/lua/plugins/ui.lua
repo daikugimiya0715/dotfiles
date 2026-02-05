@@ -16,7 +16,8 @@ return {
         },
         hide = { cursorline = false, focused_win = false, only_win = false },
         render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          local full_path = vim.api.nvim_buf_get_name(props.buf)
+          local filename = vim.fn.fnamemodify(full_path, ":t")
           if filename == "" then
             filename = "[No Name]"
           end
@@ -24,16 +25,10 @@ return {
           local ft_icon, ft_color = devicons.get_icon_color(filename)
           local modified = vim.bo[props.buf].modified
 
-          -- Show parent dir for generic filenames
-          local generic_names = { "init.lua", "index.ts", "index.js", "mod.rs", "main.go", "main.rs", "lib.rs" }
-          local display_name = filename
-          for _, name in ipairs(generic_names) do
-            if filename == name then
-              local full_path = vim.api.nvim_buf_get_name(props.buf)
-              local parent = vim.fn.fnamemodify(full_path, ":h:t")
-              display_name = parent .. "/" .. filename
-              break
-            end
+          -- Show project-root-relative path
+          local display_name = vim.fn.fnamemodify(full_path, ":.")
+          if display_name == "" or display_name == full_path then
+            display_name = filename
           end
 
           -- Diagnostics
@@ -97,7 +92,7 @@ return {
         set_cursor = true,
         set_cursorline = true,
         set_number = true,
-        ignore_filetypes = { "NvimTree", "TelescopePrompt", "oil", "lazy" },
+        ignore_filetypes = { "NvimTree", "TelescopePrompt", "oil", "lazy", "nvdash" },
       }
     end,
   },
@@ -206,14 +201,15 @@ return {
       spec = {
         { "<leader>a", group = "AI", icon = "" },
         { "<leader>b", group = "Buffer", icon = "" },
-        { "<leader>c", group = "Code/Claude", icon = "" },
-        { "<leader>f", group = "Find (Telescope)", icon = "" },
+        { "<leader>c", group = "Code", icon = "" },
+        { "<leader>f", group = "Find", icon = "" },
         { "<leader>g", group = "Git", icon = "" },
         { "<leader>l", group = "LSP", icon = "" },
         { "<leader>p", group = "Peek", icon = "" },
-        { "<leader>s", group = "Search (Snacks)", icon = "" },
+        { "<leader>r", group = "Rename/Replace", icon = "" },
         { "<leader>t", group = "Terminal", icon = "" },
         { "<leader>u", group = "Toggle", icon = "" },
+        { "<leader>w", group = "Window", icon = "" },
         { "<leader>x", group = "Diagnostics", icon = "" },
       },
     },
