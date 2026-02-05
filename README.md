@@ -52,33 +52,36 @@ brew bundle --file=~/projects/personal/dotfiles/Brewfile
 
 ## Neovimプラグイン
 
-| プラグイン      | 説明                   |
-| --------------- | ---------------------- |
-| lazy.nvim       | プラグインマネージャー |
-| tokyonight.nvim | カラースキーム         |
-| nvim-tree.lua   | ファイラー             |
-| telescope.nvim  | ファジーファインダー   |
-| nvim-treesitter | シンタックスハイライト |
-| nvim-cmp        | 自動補完               |
-| lualine.nvim    | ステータスライン       |
-| gitsigns.nvim   | Git統合                |
-| toggleterm.nvim | ターミナル統合         |
-| im-select.nvim  | 日本語入力自動切替     |
+| プラグイン       | 説明                       |
+| ---------------- | -------------------------- |
+| lazy.nvim        | プラグインマネージャー     |
+| NvChad           | ベース設定                 |
+| snacks.nvim      | ピッカー・ターミナル・ユーティリティ |
+| nvim-tree.lua    | ファイラー                 |
+| nvim-treesitter  | シンタックスハイライト     |
+| nvim-cmp         | 自動補完                   |
+| gitsigns.nvim    | Git統合（インライン表示）  |
+| diffview.nvim    | Git diff可視化             |
+| trouble.nvim     | 診断・TODO管理             |
+| flash.nvim       | 高速ナビゲーション         |
+| claudecode.nvim  | Claude AI統合              |
 
-### Neovimキーバインド
+### Neovimキーバインド（抜粋）
 
-| キー         | 説明                     |
-| ------------ | ------------------------ |
-| `<Space>`    | リーダーキー             |
-| `<C-n>`      | NvimTreeをトグル         |
-| `<C-m>`      | NvimTreeにフォーカス     |
-| `<leader>ff` | ファイル検索             |
-| `<leader>fg` | テキスト検索（grep）     |
-| `<leader>fb` | バッファ検索             |
-| `<leader>fh` | ヘルプ検索               |
-| `<C-\>`      | フローティングターミナル |
+| キー               | 説明                       |
+| ------------------ | -------------------------- |
+| `<Space>`          | リーダーキー               |
+| `<leader>e`        | NvimTreeをトグル           |
+| `<leader>ff`       | ファイル検索               |
+| `<leader>fg`       | テキスト検索（grep）       |
+| `<leader>fb`       | バッファ検索               |
+| `<leader>fh`       | ヘルプ検索                 |
+| `<leader>tt`       | フローティングターミナル   |
+| `<leader>gg`       | Lazygitを開く              |
+| `<leader>ac`       | Claude Codeをトグル        |
+| `s`                | Flashジャンプ              |
 
-トラブルシューティングについては [nvim/TROUBLESHOOTING.md](nvim/TROUBLESHOOTING.md) を参照。
+詳細なキーマップは [nvim/README.md](nvim/README.md) を参照。
 
 ## miseで管理しているランタイム
 
