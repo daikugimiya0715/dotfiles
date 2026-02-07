@@ -7,6 +7,7 @@ vim.lsp.enable({
   "gopls",
   "pyright",
   "rust_analyzer",
+  "astro",
 })
 
 -- Lua
@@ -51,6 +52,15 @@ vim.lsp.config("pyright", {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
       },
+    },
+  },
+})
+
+-- Astro
+vim.lsp.config("astro", {
+  init_options = {
+    typescript = {
+      tsdk = vim.fs.normalize("~/.local/share/mise/installs/node/22/lib/node_modules/typescript/lib"),
     },
   },
 })

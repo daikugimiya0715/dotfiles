@@ -31,6 +31,7 @@ return {
           yaml = { "prettier" },
           json = { "prettier" },
           markdown = { "prettier" },
+          astro = { "prettier" },
         },
         format_on_save = { timeout_ms = 500, lsp_fallback = true },
       }
@@ -74,6 +75,7 @@ return {
         "pyright",
         "ruff",
         "biome",
+        "astro-language-server",
       },
     },
   },
@@ -108,6 +110,7 @@ return {
         "yaml",
         "toml",
         "dockerfile",
+        "astro",
       },
       highlight = { enable = true },
       indent = { enable = true },

@@ -3,6 +3,13 @@ require "nvchad.options"
 local o = vim.o
 local opt = vim.opt
 
+-- Filetype detection for Astro
+vim.filetype.add {
+  extension = {
+    astro = "astro",
+  },
+}
+
 -- Minimal UI Settings
 -- statusline-less workflow for maximum editing space
 o.cmdheight = 0 -- No command line (noice.nvim handles it)
