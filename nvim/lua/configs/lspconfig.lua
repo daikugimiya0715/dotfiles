@@ -57,10 +57,6 @@ vim.lsp.config("pyright", {
 })
 
 -- Astro
-vim.lsp.config("astro", {
-  init_options = {
-    typescript = {
-      tsdk = vim.fs.normalize("~/.local/share/mise/installs/node/22/lib/node_modules/typescript/lib"),
-    },
-  },
-})
+-- tsdkはプロジェクトのnode_modules内のTypeScriptを自動検出するため、
+-- 明示的な設定は不要（プロジェクトにtypescriptがインストールされていれば動作する）
+vim.lsp.config("astro", {})
