@@ -6,7 +6,7 @@ local opt = vim.opt
 -- Minimal UI Settings
 -- statusline-less workflow for maximum editing space
 o.cmdheight = 0 -- No command line (noice.nvim handles it)
-o.laststatus = 0 -- No statusline (incline.nvim handles it)
+o.laststatus = 3 -- Global statusline (single bar at bottom)
 o.showmode = false -- No mode text (modes.nvim shows via cursorline color)
 
 -- Line numbers (explicit settings to ensure they always appear)

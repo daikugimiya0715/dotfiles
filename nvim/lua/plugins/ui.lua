@@ -11,8 +11,8 @@ return {
 			require("incline").setup({
 				window = {
 					padding = 0,
-					margin = { horizontal = 0, vertical = 0 },
-					placement = { horizontal = "right", vertical = "bottom" },
+					margin = { horizontal = 0, vertical = 1 },
+					placement = { horizontal = "right", vertical = "top" },
 				},
 				hide = { cursorline = false, focused_win = false, only_win = false },
 				render = function(props)
@@ -110,7 +110,7 @@ return {
 					view = "cmdline_popup",
 					format = {
 						cmdline = { pattern = "^:", icon = "", lang = "vim" },
-						search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+						search_down = { kind = "search", pattern = "^/", icon = "", lang = "regex" },
 						search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
 						filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
 						lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
@@ -156,21 +156,8 @@ return {
 				fps = 60,
 				render = "compact",
 				stages = "fade",
-				timeout = 3000,
+				timeout = 8000,
 				top_down = false,
-			})
-		end,
-	},
-
-	-- Vimade: Dim inactive buffers
-	{
-		"TaDaa/vimade",
-		event = "VeryLazy",
-		config = function()
-			require("vimade").setup({
-				fadelevel = 0.5,
-				basebg = "#11111b",
-				blocklist = { default = { buf_opts = { buftype = { "terminal" } } } },
 			})
 		end,
 	},

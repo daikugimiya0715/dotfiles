@@ -214,6 +214,49 @@ return {
 	-- nvim-dap: Debug Adapter Protocol core
 	{
 		"mfussenegger/nvim-dap",
+		dependencies = {
+			-- nvim-dap-virtual-text: Inline variable display during debug
+			{
+				"theHamsta/nvim-dap-virtual-text",
+				dependencies = { "nvim-treesitter/nvim-treesitter" },
+				opts = {},
+			},
+		},
+		config = function()
+			local dap = require("dap")
+
+			-- Go: Delve adapter
+			dap.adapters.delve = {
+				type = "server",
+				port = "${port}",
+				executable = {
+					command = "dlv",
+					args = { "dap", "-l", "127.0.0.1:${port}" },
+				},
+			}
+
+			dap.configurations.go = {
+				{
+					type = "delve",
+					name = "Debug",
+					request = "launch",
+					program = "${file}",
+				},
+				{
+					type = "delve",
+					name = "Debug (go.mod)",
+					request = "launch",
+					program = "./${relativeFileDirname}",
+				},
+				{
+					type = "delve",
+					name = "Debug test",
+					request = "launch",
+					mode = "test",
+					program = "./${relativeFileDirname}",
+				},
+			}
+		end,
 		keys = {
 			{
 				"<leader>db",

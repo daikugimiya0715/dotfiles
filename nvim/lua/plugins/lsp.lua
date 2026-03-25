@@ -70,6 +70,7 @@ return {
 				"isort",
 				"rust-analyzer",
 				"codelldb",
+				"delve",
 				"yaml-language-server",
 				"bash-language-server",
 				"pyright",
