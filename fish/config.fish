@@ -153,7 +153,7 @@ if type -q eza
     end
 
     function ll --wraps eza -d "Long list with eza"
-        eza -l --icons --git --group-directories-first $argv
+        eza -la --icons --git --group-directories-first $argv
     end
 
     function la --wraps eza -d "List all with eza"

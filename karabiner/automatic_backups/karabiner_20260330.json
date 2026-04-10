@@ -147,13 +147,7 @@
                         "product_id": 2096,
                         "vendor_id": 13364
                     },
-                    "ignore": false,
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "caps_lock" },
-                            "to": [{ "key_code": "left_control" }]
-                        }
-                    ]
+                    "ignore": false
                 },
                 {
                     "identifiers": { "is_keyboard": true },
@@ -174,19 +168,6 @@
                     },
                     "ignore": false,
                     "ignore_vendor_events": true
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 2096,
-                        "vendor_id": 13364
-                    },
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "caps_lock" },
-                            "to": [{ "key_code": "left_control" }]
-                        }
-                    ]
                 }
             ],
             "name": "Default profile",
