@@ -225,8 +225,11 @@ return {
 	-- nvim-scrollbar: Scrollbar with diagnostics/search markers
 	{
 		"petertriho/nvim-scrollbar",
+		dependencies = { "kevinhwang91/nvim-hlslens" },
 		event = "BufReadPost",
 		config = function()
+			require("hlslens").setup()
+			require("scrollbar.handlers.search").setup()
 			require("scrollbar").setup({
 				handle = {
 					color = "#585b70",
