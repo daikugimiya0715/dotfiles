@@ -156,7 +156,7 @@ return {
 				fps = 60,
 				render = "compact",
 				stages = "fade",
-				timeout = 8000,
+				timeout = 3000,
 				top_down = false,
 			})
 		end,
