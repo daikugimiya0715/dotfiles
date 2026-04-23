@@ -20,6 +20,13 @@ conform.setup({
 		-- Rust
 		rust = { "rustfmt" },
 
+		-- Terraform
+		terraform = { "terraform_fmt" },
+
+		-- Shell
+		bash = { "shfmt" },
+		sh = { "shfmt" },
+
 		-- Web
 		html = { "prettier" },
 		css = { "prettier" },

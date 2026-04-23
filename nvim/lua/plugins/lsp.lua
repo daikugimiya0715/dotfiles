@@ -15,25 +15,7 @@ return {
 			},
 		},
 		config = function()
-			require("conform").setup({
-				formatters_by_ft = {
-					typescript = { "prettier", "deno_fmt" },
-					javascript = { "prettier" },
-					typescriptreact = { "prettier" },
-					javascriptreact = { "prettier" },
-					lua = { "stylua" },
-					terraform = { "terraform_fmt" },
-					bash = { "shfmt" },
-					sh = { "shfmt" },
-					python = { "black", "isort" },
-					rust = { "rustfmt", lsp_format = "fallback" },
-					go = { "gofmt", "goimports", "gofumpt" },
-					yaml = { "prettier" },
-					json = { "prettier" },
-					markdown = { "prettier" },
-				},
-				format_on_save = { timeout_ms = 500, lsp_fallback = true },
-			})
+			require("configs.conform")
 		end,
 	},
 
@@ -66,8 +48,6 @@ return {
 				"gopls",
 				"gofumpt",
 				"terraform-ls",
-				"black",
-				"isort",
 				"rust-analyzer",
 				"codelldb",
 				"delve",
@@ -80,6 +60,13 @@ return {
 				"marksman",
 			},
 		},
+	},
+
+	-- mason-lspconfig.nvim: Mason と LSP の橋渡し
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
 	},
 
 	-- schemastore.nvim: JSON schemas
@@ -132,37 +119,35 @@ return {
 		},
 	},
 
-	-- nvim-treesitter
+	-- nvim-treesitter: クエリファイル（highlights.scm等）の提供元
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter").setup({
-				ensure_installed = {
-					"vim",
-					"lua",
-					"vimdoc",
-					"html",
-					"css",
-					"markdown",
-					"markdown_inline",
-					"terraform",
-					"hcl",
-					"bash",
-					"python",
-					"rust",
-					"go",
-					"gomod",
-					"gosum",
-					"typescript",
-					"javascript",
-					"tsx",
-					"json",
-					"yaml",
-					"toml",
-					"dockerfile",
-				},
-			})
-		end,
+		opts = {
+			ensure_installed = {
+				"vim",
+				"lua",
+				"vimdoc",
+				"html",
+				"css",
+				"markdown",
+				"markdown_inline",
+				"terraform",
+				"hcl",
+				"bash",
+				"python",
+				"rust",
+				"go",
+				"gomod",
+				"gosum",
+				"typescript",
+				"javascript",
+				"tsx",
+				"json",
+				"yaml",
+				"toml",
+				"dockerfile",
+			},
+		},
 	},
 }
