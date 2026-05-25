@@ -4,3 +4,4 @@ fish/completions/
 fish/conf.d/
 fish/functions/
 fish/themes/
+fish/local.fish

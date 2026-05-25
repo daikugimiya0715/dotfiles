@@ -14,9 +14,6 @@ set -g fish_greeting
 # ═══════════════════════════════════════════════════════════════════════════
 # 1. RANCHER DESKTOP (MAINTAINED)
 # ═══════════════════════════════════════════════════════════════════════════
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-set --export --prepend PATH "/Users/daichikugimiya/.rd/bin"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 set -x DOCKER_HOST "unix:///Users/daichikugimiya/.rd/docker.sock"
 
@@ -365,3 +362,7 @@ test -f $XDG_CONFIG_HOME/fish/local.fish; and source $XDG_CONFIG_HOME/fish/local
 # 15. STARSHIP PROMPT (must be last)
 # ═══════════════════════════════════════════════════════════════════════════
 type -q starship; and starship init fish | source
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+set --export --prepend PATH "/Users/daichikugimiya/.rd/bin"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
