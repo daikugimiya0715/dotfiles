@@ -10,7 +10,7 @@
                                 "from": {
                                     "key_code": "semicolon",
                                     "modifiers": { "optional": ["caps_lock"] }
-
+                                },
                                 "to": [
                                     {
                                         "key_code": "semicolon",
@@ -152,6 +152,10 @@
                         {
                             "from": { "key_code": "caps_lock" },
                             "to": [{ "key_code": "left_control" }]
+                        },
+                        {
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "fn" }]
                         }
                     ]
                 },
@@ -191,14 +195,12 @@
                         {
                             "from": { "key_code": "caps_lock" },
                             "to": [{ "key_code": "left_control" }]
+                        },
+                        {
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "fn" }]
                         }
                     ]
-                }
-            ],
-            "fn_function_keys": [
-                {
-                    "from": { "key_code": "f7" },
-                    "to": [{ "key_code": "f7" }]
                 }
             ],
             "name": "Default profile",
