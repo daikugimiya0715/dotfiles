@@ -3,6 +3,7 @@ return {
 	-- incline.nvim: Floating statusline for current file info
 	{
 		"b0o/incline.nvim",
+		enabled = false,
 		event = "BufReadPre",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()

@@ -85,9 +85,13 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
--- Buffer navigation
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+-- Buffer navigation (tabufline の表示順に沿って移動: h=左, l=右)
+map("n", "<S-h>", function()
+	require("nvchad.tabufline").prev()
+end, { desc = "Prev buffer" })
+map("n", "<S-l>", function()
+	require("nvchad.tabufline").next()
+end, { desc = "Next buffer" })
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Visual Mode Improvements

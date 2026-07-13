@@ -299,6 +299,7 @@ return {
 				},
 				renderer = {
 					highlight_git = "name",
+					highlight_opened_files = "name",
 					special_files = {},
 					icons = {
 						web_devicons = {

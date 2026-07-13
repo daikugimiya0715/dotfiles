@@ -372,8 +372,20 @@ return {
 		build = "cd app && yarn install",
 		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
+			-- 別バッファに移ってもプレビューを閉じない
+			vim.g.mkdp_auto_close = 0
+			-- ブラウザを前面に出さずに開く (macOS: open -g)
+			vim.cmd([[
+				function! MkdpOpenInBackground(url) abort
+					call system('open -g ' . shellescape(a:url))
+				endfunction
+			]])
+			vim.g.mkdp_browserfunc = "MkdpOpenInBackground"
 		end,
 		ft = { "markdown" },
+		keys = {
+			{ "<leader>um", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview", ft = "markdown" },
+		},
 	},
 
 	-- Render Markdown (in-editor markdown rendering)

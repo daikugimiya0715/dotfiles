@@ -1,9 +1,12 @@
 [tools]
 node = "22"
 pnpm = "8.15.5"
-python = "3.12.6"
+python = "3.12.13"
 uv = "latest"
 supabase = "latest"
 yarn = "latest"
 rust = "latest"
 tree-sitter = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
+"npm:@playwright/cli" = "latest"
+buf = "latest"
