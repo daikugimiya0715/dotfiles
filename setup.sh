@@ -95,6 +95,18 @@ main() {
     # tmux (.tmux.conf はホームディレクトリに配置)
     link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
+    # Claude Code の個人スキル (~/.claude/skills/ 以下へ各スキルをリンク)
+    if [ -d "$DOTFILES_DIR/claude/skills" ]; then
+        local claude_skills_dir="$HOME/.claude/skills"
+        mkdir -p "$claude_skills_dir"
+        for skill in "$DOTFILES_DIR/claude/skills"/*/; do
+            [ -d "$skill" ] || continue
+            local skill_name
+            skill_name=$(basename "$skill")
+            link_file "${skill%/}" "$claude_skills_dir/$skill_name"
+        done
+    fi
+
     echo ""
     echo "======================================"
     info "Setup complete!"
