@@ -92,6 +92,10 @@ main() {
     # git
     link_file "$DOTFILES_DIR/git" "$CONFIG_DIR/git"
 
+    # herdr (config.toml のみリンク。sockets/logs/session.json はランタイム生成物なので除外)
+    mkdir -p "$CONFIG_DIR/herdr"
+    link_file "$DOTFILES_DIR/herdr/config.toml" "$CONFIG_DIR/herdr/config.toml"
+
     # tmux (.tmux.conf はホームディレクトリに配置)
     link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
