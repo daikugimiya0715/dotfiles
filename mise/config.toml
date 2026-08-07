@@ -10,3 +10,11 @@ tree-sitter = "latest"
 aws-cli = { version = "latest", symlink_bins = "true" }
 "npm:@playwright/cli" = "latest"
 buf = "latest"
+colima = "latest"
+docker-cli = "latest"
+docker-compose = "latest"
+lima = "latest"
+"pipx:dvc" = { version = "latest", uvx_args = "--with dvc-s3 --with botocore[crt]" }
+direnv = "latest"
+"aqua:docker/buildx" = "latest"
+"npm:@fission-ai/openspec" = "latest"

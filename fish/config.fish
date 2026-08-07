@@ -12,10 +12,11 @@ end
 set -g fish_greeting
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 1. RANCHER DESKTOP (MAINTAINED)
+# 1. DOCKER (colima)
 # ═══════════════════════════════════════════════════════════════════════════
-
-set -x DOCKER_HOST "unix:///Users/daichikugimiya/.rd/docker.sock"
+# Rancher Desktop から colima に移行 (2026-07)。
+# DOCKER_HOST を set すると docker context を上書きしてしまうため設定しない
+# (接続先は `docker context use colima` で管理する)
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 2. XDG BASE DIRECTORY SPECIFICATION
