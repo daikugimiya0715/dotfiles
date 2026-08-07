@@ -73,6 +73,11 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
+# OSC 8 ハイパーリンク出力を無効化（Claude Code など supports-hyperlinks 準拠ツール）
+# Ghostty は OSC 8 リンクの Ctrl+クリックを無効化できず、herdr の
+# リンクハンドラー（herdr-browser ペイン）と二重発火して外部 Chrome が開くため
+set -gx FORCE_HYPERLINK 0
+
 # ═══════════════════════════════════════════════════════════════════════════
 # 6. FZF CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════

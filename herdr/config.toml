@@ -1,4 +1,8 @@
 onboarding = false
+
+# herdr-browser プラグインに必要（ペイン内へのブラウザ描画）
+[experimental]
+kitty_graphics = true
 [ui.toast]
 delivery = "system"
 

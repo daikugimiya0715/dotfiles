@@ -1,5 +1,6 @@
 [tools]
 node = "22"
+bun = "latest"
 pnpm = "8.15.5"
 python = "3.12.13"
 uv = "latest"
