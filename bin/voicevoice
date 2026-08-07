@@ -1,0 +1,39 @@
+#!/bin/bash
+# voicevoice - VOICEVOX でテキストを読み上げる CLI
+# 使い方: voicevoice "読み上げたいテキスト"
+# 環境変数: VOICEVOICE_SPEAKER (デフォルト 3 = ずんだもん ノーマル)
+
+set -u
+
+ENGINE_URL="http://127.0.0.1:50021"
+SPEAKER="${VOICEVOICE_SPEAKER:-3}"
+ENGINE_BIN="/Applications/VOICEVOX.app/Contents/Resources/vv-engine/run"
+
+TEXT="${1:-}"
+[ -z "$TEXT" ] && exit 0
+
+# エンジンが起動していなければヘッドレスで起動して待つ
+if ! curl -s -m 2 "$ENGINE_URL/version" > /dev/null 2>&1; then
+  if [ -x "$ENGINE_BIN" ]; then
+    nohup "$ENGINE_BIN" > /dev/null 2>&1 &
+    for _ in $(seq 1 30); do
+      sleep 1
+      curl -s -m 2 "$ENGINE_URL/version" > /dev/null 2>&1 && break
+    done
+  fi
+  curl -s -m 2 "$ENGINE_URL/version" > /dev/null 2>&1 || exit 1
+fi
+
+WAV="$(mktemp /tmp/voicevoice.XXXXXX.wav)"
+trap 'rm -f "$WAV"' EXIT
+
+# audio_query → synthesis → 再生
+ENC_TEXT=$(printf '%s' "$TEXT" | /opt/homebrew/bin/jq -sRr '@uri')
+QUERY=$(curl -s -m 10 -X POST "$ENGINE_URL/audio_query?text=$ENC_TEXT&speaker=$SPEAKER")
+[ -z "$QUERY" ] && exit 1
+
+curl -s -m 60 -X POST "$ENGINE_URL/synthesis?speaker=$SPEAKER" \
+  -H "Content-Type: application/json" \
+  -d "$QUERY" -o "$WAV" || exit 1
+
+afplay "$WAV"

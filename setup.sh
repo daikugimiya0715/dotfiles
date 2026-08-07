@@ -99,6 +99,40 @@ main() {
     # tmux (.tmux.conf はホームディレクトリに配置)
     link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
+    # Claude Code の global CLAUDE.md (~/.claude/CLAUDE.md にリンク)
+    if [ -f "$DOTFILES_DIR/claude/CLAUDE.md" ]; then
+        mkdir -p "$HOME/.claude"
+        link_file "$DOTFILES_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+    fi
+
+    # Claude Code の settings.json とステータスライン
+    if [ -f "$DOTFILES_DIR/claude/settings.json" ]; then
+        mkdir -p "$HOME/.claude"
+        link_file "$DOTFILES_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+    fi
+    if [ -f "$DOTFILES_DIR/claude/statusline-command.sh" ]; then
+        mkdir -p "$HOME/.claude"
+        link_file "$DOTFILES_DIR/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+    fi
+
+    # Claude Code のフックスクリプト (~/.claude/hooks/ 以下へ各スクリプトをリンク)
+    if [ -d "$DOTFILES_DIR/claude/hooks" ]; then
+        mkdir -p "$HOME/.claude/hooks"
+        for hook in "$DOTFILES_DIR/claude/hooks"/*.sh; do
+            [ -f "$hook" ] || continue
+            link_file "$hook" "$HOME/.claude/hooks/$(basename "$hook")"
+        done
+    fi
+
+    # ~/bin のスクリプト (voicevoice など)
+    if [ -d "$DOTFILES_DIR/bin" ]; then
+        mkdir -p "$HOME/bin"
+        for bin in "$DOTFILES_DIR/bin"/*; do
+            [ -f "$bin" ] || continue
+            link_file "$bin" "$HOME/bin/$(basename "$bin")"
+        done
+    fi
+
     # Claude Code の個人スキル (~/.claude/skills/ 以下へ各スキルをリンク)
     if [ -d "$DOTFILES_DIR/claude/skills" ]; then
         local claude_skills_dir="$HOME/.claude/skills"
