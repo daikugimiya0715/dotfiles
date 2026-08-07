@@ -288,14 +288,25 @@ return {
 		},
 		config = function()
 			require("nvim-tree").setup({
+				-- 追従は下の自作 BufEnter autocmd に一本化する（二重発火を回避）
 				update_focused_file = {
-					enable = true,
+					enable = false,
 					update_root = false,
 				},
+				-- node_modules など巨大ディレクトリの変更監視を止める（重さ対策）
+				filesystem_watchers = {
+					enable = true,
+					ignore_dirs = { "node_modules", ".git", "dist", "build", "target", ".next" },
+				},
 				view = {
-					width = 30,
+					width = {
+						min = 30,
+						max = 60,
+						padding = 1,
+					},
 					side = "left",
 					cursorline = true,
+					preserve_window_proportions = true,
 				},
 				renderer = {
 					highlight_git = "name",
@@ -330,6 +341,18 @@ return {
 					local bufname = vim.fn.bufname()
 					-- Skip if entering the tree itself or non-file buffers
 					if bufname:match("NvimTree_") or vim.bo.buftype ~= "" then
+						return
+					end
+					-- 巨大ディレクトリ（node_modules など）へは追従しない。
+					-- 展開しにいくと数千ファイルを読んで固まるため。
+					if
+						bufname:match("node_modules")
+						or bufname:match("%.git/")
+						or bufname:match("/dist/")
+						or bufname:match("/build/")
+						or bufname:match("/target/")
+						or bufname:match("/%.next/")
+					then
 						return
 					end
 					-- Only find_file if the tree is already visible

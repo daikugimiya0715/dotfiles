@@ -1,6 +1,12 @@
 local conform = require("conform")
 
 conform.setup({
+	formatters = {
+		-- biome.json / biome.jsonc があるプロジェクトでのみ biome を使う
+		-- （無いプロジェクトでは unavailable になり prettier にフォールバック）
+		biome = { require_cwd = true },
+	},
+
 	formatters_by_ft = {
 		lua = { "stylua" },
 

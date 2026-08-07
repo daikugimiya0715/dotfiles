@@ -119,35 +119,16 @@ return {
 		},
 	},
 
-	-- nvim-treesitter: クエリファイル（highlights.scm等）の提供元
+	-- nvim-treesitter: パーサーとクエリファイル（highlights.scm等）の提供元
+	-- NOTE: main ブランチは master とは非互換な全面書き直しで、`opts.ensure_installed` や
+	-- `highlight.enable` は無視される。パーサーの導入とハイライト有効化は configs/treesitter で明示する。
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false, -- main ブランチは lazy-loading 非対応
 		build = ":TSUpdate",
-		opts = {
-			ensure_installed = {
-				"vim",
-				"lua",
-				"vimdoc",
-				"html",
-				"css",
-				"markdown",
-				"markdown_inline",
-				"terraform",
-				"hcl",
-				"bash",
-				"python",
-				"rust",
-				"go",
-				"gomod",
-				"gosum",
-				"typescript",
-				"javascript",
-				"tsx",
-				"json",
-				"yaml",
-				"toml",
-				"dockerfile",
-			},
-		},
+		config = function()
+			require("configs.treesitter")
+		end,
 	},
 }
