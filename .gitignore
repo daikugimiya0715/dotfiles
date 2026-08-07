@@ -2,6 +2,10 @@
 fish/fish_variables
 fish/completions/
 fish/conf.d/
-fish/functions/
+# functions はプラグイン生成物が混ざるため原則除外し、手書きの関数だけ明示的に追跡する
+fish/functions/*
+!fish/functions/awake.fish
+!fish/functions/rest.fish
+!fish/functions/zunda.fish
 fish/themes/
 fish/local.fish
