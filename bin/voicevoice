@@ -1,16 +1,52 @@
 #!/bin/bash
 # voicevoice - VOICEVOX でテキストを読み上げる CLI
-# 使い方: voicevoice "読み上げたいテキスト"
-# 環境変数: VOICEVOICE_SPEAKER (デフォルト 3 = ずんだもん ノーマル)
+# 使い方:
+#   voicevoice "読み上げたいテキスト"   読み上げる
+#   voicevoice --stop                   再生中の読み上げを止める
+# 速度: ~/.voicevoice_speed（1行の数値）> $VOICEVOICE_SPEED > 1.3
+# 話者: $VOICEVOICE_SPEAKER（デフォルト 3 = ずんだもん ノーマル）
 
 set -u
 
 ENGINE_URL="http://127.0.0.1:50021"
 SPEAKER="${VOICEVOICE_SPEAKER:-3}"
 ENGINE_BIN="/Applications/VOICEVOX.app/Contents/Resources/vv-engine/run"
+PIDFILE="$HOME/.voicevoice.pid"
+SPEEDFILE="$HOME/.voicevoice_speed"
+
+# 実行中の読み上げ（合成待ちの curl と再生中の afplay）を止める
+stop_playback() {
+  if [ -f "$PIDFILE" ]; then
+    OLD=$(cat "$PIDFILE" 2>/dev/null)
+    if [ -n "$OLD" ] && kill -0 "$OLD" 2>/dev/null; then
+      pkill -P "$OLD" 2>/dev/null
+      kill "$OLD" 2>/dev/null
+    fi
+    rm -f "$PIDFILE"
+  fi
+  pkill -f 'afplay /tmp/voicevoice' 2>/dev/null
+  return 0
+}
+
+case "${1:-}" in
+  --stop|stop)
+    stop_playback
+    exit 0
+    ;;
+esac
 
 TEXT="${1:-}"
 [ -z "$TEXT" ] && exit 0
+
+# 読み上げ速度（1.0 = 等速）
+if [ -f "$SPEEDFILE" ]; then
+  SPEED=$(tr -dc '0-9.' < "$SPEEDFILE")
+fi
+SPEED="${SPEED:-${VOICEVOICE_SPEED:-1.3}}"
+
+# 前の読み上げが残っていたら止めてから喋る（重なり防止）
+stop_playback
+echo $$ > "$PIDFILE"
 
 # エンジンが起動していなければヘッドレスで起動して待つ
 if ! curl -s -m 2 "$ENGINE_URL/version" > /dev/null 2>&1; then
@@ -25,12 +61,17 @@ if ! curl -s -m 2 "$ENGINE_URL/version" > /dev/null 2>&1; then
 fi
 
 WAV="$(mktemp /tmp/voicevoice.XXXXXX.wav)"
-trap 'rm -f "$WAV"' EXIT
+trap 'rm -f "$WAV"; [ "$(cat "$PIDFILE" 2>/dev/null)" = "$$" ] && rm -f "$PIDFILE"' EXIT
 
-# audio_query → synthesis → 再生
+# audio_query → 速度など調整 → synthesis → 再生
 ENC_TEXT=$(printf '%s' "$TEXT" | /opt/homebrew/bin/jq -sRr '@uri')
 QUERY=$(curl -s -m 10 -X POST "$ENGINE_URL/audio_query?text=$ENC_TEXT&speaker=$SPEAKER")
 [ -z "$QUERY" ] && exit 1
+
+# speedScale で話速、pre/postPhonemeLength で前後の無音を詰める
+QUERY=$(printf '%s' "$QUERY" | /opt/homebrew/bin/jq \
+  --argjson s "$SPEED" \
+  '.speedScale = $s | .prePhonemeLength = 0 | .postPhonemeLength = 0')
 
 curl -s -m 60 -X POST "$ENGINE_URL/synthesis?speaker=$SPEAKER" \
   -H "Content-Type: application/json" \
