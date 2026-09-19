@@ -1,3 +1,9 @@
+[settings]
+# terraform は tfenv 形式の `.terraform-version` をディレクトリごとに持つリポジトリがあるため、
+# idiomatic version file を尊重する。global の latest を使ったまま古い state を
+# うっかり新しい terraform で init/apply してしまう事故を防ぐ。
+idiomatic_version_file_enable_tools = ["terraform"]
+
 [tools]
 node = "22"
 bun = "latest"
@@ -17,5 +23,6 @@ docker-compose = "latest"
 lima = "latest"
 "pipx:dvc" = { version = "latest", uvx_args = "--with dvc-s3 --with botocore[crt]" }
 direnv = "latest"
+terraform = "latest"
 "aqua:docker/buildx" = "latest"
 "npm:@fission-ai/openspec" = "latest"
