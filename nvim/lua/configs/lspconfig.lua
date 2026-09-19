@@ -8,6 +8,7 @@ vim.lsp.enable({
 	"gopls",
 	"pyright",
 	"marksman",
+	"terraformls",
 })
 
 -- Lua
@@ -68,6 +69,28 @@ vim.lsp.config("gopls", {
 			},
 			staticcheck = true,
 			gofumpt = true,
+		},
+	},
+})
+
+-- Terraform
+-- nvim-lspconfig デフォルトの root_markers は { ".terraform", ".git" }。terraform_for_aws のような
+-- 数百の root module を含む monorepo では root がリポジトリルートになり、terraform-ls が
+-- 全体を走査して実用にならない。root を「*.tf があるディレクトリ」＝ terraform の root module 単位に変える。
+vim.lsp.config("terraformls", {
+	root_dir = function(bufnr, on_dir)
+		local root = vim.fs.root(bufnr, function(name)
+			return name:match("%.tf$") ~= nil
+		end)
+		if root then
+			on_dir(root)
+		end
+	end,
+	-- terraform-ls は settings ではなく init_options で設定を受け取る。
+	-- validateOnSave は terraform init 済みでないとエラーだらけになるため有効にしない。
+	init_options = {
+		experimentalFeatures = {
+			prefillRequiredFields = true,
 		},
 	},
 })

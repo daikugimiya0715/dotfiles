@@ -31,6 +31,16 @@ return {
 	-- mason.nvim: LSP/DAP/Linter installer
 	{
 		"williamboman/mason.nvim",
+		opts = {},
+	},
+
+	-- mason-tool-installer.nvim: mason パッケージの自動インストール
+	-- NOTE: mason.nvim 本体に `ensure_installed` オプションは存在しない（書いても黙って無視される）。
+	-- 実際にインストールを走らせるにはこのプラグインが必要。LSP/フォーマッタ/リンタ/DAP をまとめて宣言する。
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		event = "VeryLazy",
 		opts = {
 			ensure_installed = {
 				"lua-language-server",
@@ -59,6 +69,8 @@ return {
 				"eslint-lsp",
 				"marksman",
 			},
+			run_on_start = true,
+			auto_update = false,
 		},
 	},
 

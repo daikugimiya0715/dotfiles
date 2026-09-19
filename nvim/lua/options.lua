@@ -28,6 +28,24 @@ o.shiftwidth = 2
 o.expandtab = true
 o.smartindent = true
 
+-- Folding (treesitter ベース)
+o.foldmethod = "expr"
+o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+o.foldenable = true
+o.foldlevel = 99 -- 開いた状態で開始（閉じるのは za/zc で明示的に）
+o.foldlevelstart = 99
+-- 折りたたみ行は configs/fold.lua が描く（シグネチャ + ⋯ + 閉じ括弧 + 行数）
+o.foldtext = "v:lua.require'configs.fold'.foldtext()"
+opt.fillchars:append({ fold = " " }) -- 折りたたみ行の末尾を埋める文字を消す
+
+require("configs.fold").setup_highlights()
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function()
+		require("configs.fold").setup_highlights()
+	end,
+	desc = "Re-apply fold marker highlights after colorscheme change",
+})
+
 -- Search
 o.ignorecase = true
 o.smartcase = true
